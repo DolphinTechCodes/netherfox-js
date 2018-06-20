@@ -1,0 +1,23 @@
+{
+  "name": "netherfox",
+  "version": "1.0.4",
+  "description": "A control and monitoriong tool for minecraft servers",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "netherfox",
+    "minecraft",
+    "server",
+    "console"
+  ],
+  "author": "DolphinTech",
+  "license": "ISC",
+  "dependencies": {
+    "argv": ">=0.0.2",
+    "colors": "~1"
+  },
+  "preferGlobal":true,
+  "bin":"./bin/netherfox"
+}
