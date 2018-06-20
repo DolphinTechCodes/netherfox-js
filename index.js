@@ -43,7 +43,7 @@ module.exports = {
 
         /* The send method sends the data through the socket to the minecraft server */
         fox.send = function (msg) {
-            this._sock.write(msg);
+            this.write(msg);
         }
 
         /* The chat method sends a message to the server */
@@ -67,7 +67,7 @@ module.exports = {
             });
         }
 
-        fox.connect({ path: (SOCK_LOC + name) });
+        fox.connect({ path: (SOCK_LOC + name) },()=>fox.connected=true);
         return fox;
     }
 
