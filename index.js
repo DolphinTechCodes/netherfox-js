@@ -16,7 +16,7 @@ class Fox extends EventEmitter {
         super();
         this.port = null;
         this.name = null;
-        this.catched = false;
+        this.connected = false;
 
 
     }
@@ -29,7 +29,7 @@ class Fox extends EventEmitter {
     catch(name, cb) {
         var self = this;
         this.name = name;
-        this.catched = true;
+        this.connected = true;
 
         /* Open the communication socket */
         sock = createConnection(__dirname + name);
@@ -62,7 +62,7 @@ class Fox extends EventEmitter {
         delete this.send;
         delete this.say;
         delete this.stop;
-        this.catched = false;
+        this.connected = false;
     }
 
 
@@ -102,4 +102,5 @@ class Fox extends EventEmitter {
     }
 }
 
-module.exports=Fox;
+//module.exports=Fox;
+

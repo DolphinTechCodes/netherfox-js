@@ -34,6 +34,6 @@ argv.option({
     example: "netherfox -s java minecraft_server.jar"
 });
 
-
+const args=argv.run(process.argv.slice(process.argv[0]=="netherfox"?1:2));
 
 console.log(argv.run(["-IOs","java","a","b" ]));

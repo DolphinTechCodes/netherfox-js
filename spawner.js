@@ -19,7 +19,7 @@ sock.on("connection", (conn) => {
 
 });
 
-sock.on("error",console.error);
+sock.on("error",sock.close);
 
 
 
