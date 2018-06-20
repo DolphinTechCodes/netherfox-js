@@ -9,12 +9,12 @@ const SOCK_LOC = __dirname + "/socks/";
 module.exports = {
 
     /* The start method spawns spawner.js in detached mode which then executes the bypassed command */
-    start=function (name, cmd) {
+    start:function (name, cmd) {
         cp.spawn("node", [__dirname + "/spawner.js", __dirname + name], { detached: true, stdio: "ignore" });
     },
 
     /* The parse method analyzes a log entry */
-    parseLog=function (log) {
+    parseLog:function (log) {
         return {
 
             time: {
@@ -34,7 +34,7 @@ module.exports = {
 
     /* The connect method establishes a connection to the server and returns a Fox instance via callback 
        I know I should not put all the logic in here, but I want to get it work quickly */
-    connect=function (name) {
+    connect:function (name) {
         let fox = new Socket();
 
         fox.port = null;
