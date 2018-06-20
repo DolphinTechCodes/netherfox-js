@@ -1,6 +1,10 @@
-var argv = require("argv")
+var argv = require("argv");
+const netherfox = require("./index.js");
+const rl = require("readline");
 
-argv.version( 'v1.0' );
+var name, fox;
+
+argv.version('1.0.0');
 argv.option({
     name: 'name',
     short: 'n',
@@ -34,6 +38,37 @@ argv.option({
     example: "netherfox -s java minecraft_server.jar"
 });
 
-const args=argv.run(process.argv.slice(process.argv[0]=="netherfox"?1:2));
+argv.option({
+    name: 'insert',
+    short: 'i',
+    type: 'boolean',
+    description: 'Send the folowing commands directly to the Minecraft server',
+    example: "netherfox -i stop"
+});
 
-console.log(argv.run(["-IOs","java","a","b" ]));
+const args = argv.run(process.argv.slice(process.argv[0] == "netherfox" ? 1 : 2));
+
+if (argv.name) {
+    name = argv.name;
+}
+else {
+    //TODO: automatically select the name 
+}
+
+if (argv.start) {
+    if (argv.insert) {
+        console.error("--start and --insert flags are not allowed at the same time")
+        process.exitCode = 1;
+    }
+    else {
+        netherfox.start(name, argv.target);
+    }
+}
+
+
+if (argv.insert) {
+
+}
+
+
+
