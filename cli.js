@@ -46,29 +46,50 @@ argv.option({
     example: "netherfox -i stop"
 });
 
+argv.option({
+    name: 'colours',
+    short: 'c',
+    type: 'boolean',
+    description: 'Output a colourized version of the log',
+    example: "netherfox -cIO"
+});
+
 const args = argv.run(process.argv.slice(process.argv[0] == "netherfox" ? 1 : 2));
 
-if (argv.name) {
-    name = argv.name;
+console.log(args.options.start)
+
+if (args.options.name) {
+    name = args.options.name;
 }
 else {
     //TODO: automatically select the name 
 }
 
-if (argv.start) {
-    if (argv.insert) {
+if (!process.exitCode && args.options.start) {
+    if (args.options.insert) {
         console.error("--start and --insert flags are not allowed at the same time")
         process.exitCode = 1;
     }
     else {
-        netherfox.start(name, argv.target);
+        netherfox.start(name, args.target);
     }
 }
 
-
-if (argv.insert) {
-
-}
+if (!process.exitCode) fox = netherfox.connect(name, () => {
 
 
 
+
+    if (!process.exitCode && args.options.insert) {
+        fox.write(args.target.join(" "));
+    }
+
+    if (!process.exitCode && args.options.input) {
+        process.stdin.on("data", (message) => fox.write(message));
+    }
+
+    if (!process.exitCode && args.options.output) {
+        fox.on("data", (message) => process.stdout.write(message));
+    }
+
+});
