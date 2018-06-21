@@ -71,7 +71,7 @@ if (!process.exitCode && args.options.start) {
         process.exitCode = 1;
     }
     else {
-        netherfox.start(name, args.target);
+        netherfox.start("name", args.target);
     }
 }
 
