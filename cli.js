@@ -89,7 +89,18 @@ if (!process.exitCode) fox = netherfox.connect(name, () => {
     }
 
     if (!process.exitCode && args.options.output) {
-        fox.on("data", (message) => process.stdout.write(message));
+        if (args.options.colours) {
+            fox.on("data",(message)=>{
+                let parsed=netherfox.parseLog(message);
+                
+
+            });
+        }
+        else {
+            fox.on("data", (message) => process.stdout.write(message));
+        }
+
+
     }
 
 });
