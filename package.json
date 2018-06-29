@@ -1,6 +1,6 @@
 {
   "name": "netherfox",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "A control and monitoriong tool for minecraft servers",
   "main": "index.js",
   "scripts": {

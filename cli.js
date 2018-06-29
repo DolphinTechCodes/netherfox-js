@@ -62,7 +62,7 @@ const args = argv.run(process.argv.slice(process.argv[0] == "netherfox" ? 1 : 2)
 if (args.options.name) {
     name = args.options.name;
 
-    if (args.options.start && fs.existsSync(path.resolve(netherfox.SOCK_DIR, name))) {
+    if (args.options.start && fs.existsSync(path.resolve(__dirname,netherfox.SOCK_DIR, name))) {
         console.error("server " + name + " is already running");
         process.exitCode = 1;
     }
@@ -75,7 +75,7 @@ else {
     else {
         //TODO: automatically select the name 
 
-        var running_servers = fs.readdirSync(path.resolve(netherfox.SOCK_DIR));
+        var running_servers = fs.readdirSync(path.resolve(__dirname,netherfox.SOCK_DIR));
 
         if (running_servers.length === 0) {
             console.error("there is currently no server running");
