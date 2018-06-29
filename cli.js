@@ -66,6 +66,10 @@ if (args.options.name) {
         console.error("server " + name + " is already running");
         process.exitCode = 1;
     }
+    else if (!fs.existsSync(path.resolve(__dirname,netherfox.SOCK_DIR, name))) {
+        console.error("server " + name + " does not exist");
+        process.exitCode = 1;
+    }
 }
 else {
     if (args.options.start) {
