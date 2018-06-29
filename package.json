@@ -1,6 +1,6 @@
 {
   "name": "netherfox",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "A control and monitoriong tool for minecraft servers",
   "main": "index.js",
   "scripts": {
@@ -13,6 +13,7 @@
     "server",
     "console"
   ],
+
   "author": "DolphinTech",
   "license": "ISC",
   "dependencies": {
