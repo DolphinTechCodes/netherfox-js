@@ -1,6 +1,7 @@
+const fs = require("fs");
+
 var argv = require("argv");
 const netherfox = require("./index.js");
-const rl = require("readline");
 
 var name, fox;
 
@@ -56,14 +57,46 @@ argv.option({
 
 const args = argv.run(process.argv.slice(process.argv[0] == "netherfox" ? 1 : 2));
 
-console.log(args.options.start)
+
 
 if (args.options.name) {
     name = args.options.name;
+
+    if (args.options.start && fs.existsSync("socks/" + name)) {
+        console.error("server " + name + " is already running");
+        process.exitCode = 1;
+    }
 }
 else {
-    //TODO: automatically select the name 
+    if (args.options.start) {
+        console.error("a server name must be specified");
+        process.exitCode = 1;
+    }
+    else {
+        //TODO: automatically select the name 
+
+        var running_servers = fs.readdirSync("socks");
+
+        if (running_servers.length === 0) {
+            console.error("there is currently no server running");
+            process.exitCode = 1;
+
+        }
+
+        if (running_servers.length === 1) {
+            name = running_servers[0];
+        }
+
+        if (running_servers.length > 1) {
+            console.error("there are currently more than one servers running. Please specify a servern name");
+            process.exitCode = 1;
+
+        }
+    }
+
 }
+
+
 
 if (!process.exitCode && args.options.start) {
     if (args.options.insert) {
@@ -71,9 +104,12 @@ if (!process.exitCode && args.options.start) {
         process.exitCode = 1;
     }
     else {
+
         netherfox.start("name", args.target);
     }
 }
+
+
 
 if (!process.exitCode) fox = netherfox.connect(name, () => {
 
@@ -90,9 +126,9 @@ if (!process.exitCode) fox = netherfox.connect(name, () => {
 
     if (!process.exitCode && args.options.output) {
         if (args.options.colours) {
-            fox.on("data",(message)=>{
-                let parsed=netherfox.parseLog(message);
-                
+            fox.on("data", (message) => {
+                let parsed = netherfox.parseLog(message);
+
 
             });
         }
