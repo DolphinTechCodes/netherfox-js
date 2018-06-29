@@ -23,7 +23,8 @@ sock.on("error",sock.close);
 
 
 
-var child = spawn(process.argv[3], process.argv.slice(3));
+var child = spawn(process.argv[3], process.argv.slice(4));
+
 
 child.stdout.on("data",(data)=>{for(let e of listeners) e.write(data)});
 child.stderr.on("data",(data)=>{for(let e of listeners) e.write(data)});
