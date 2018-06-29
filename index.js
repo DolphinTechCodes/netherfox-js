@@ -8,6 +8,9 @@ const SOCK_DIR = "socks";
 
 module.exports = {
 
+    /* Export the default directory for sockets */
+    SOCK_DIR: SOCK_DIR,
+
     /* The start method spawns spawner.js in detached mode which then executes the bypassed command */
     start: function (name, cmd) {
         console.log(path.resolve(SOCK_DIR,name))
