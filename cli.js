@@ -135,11 +135,13 @@ if (!process.exitCode && (args.options.insert || args.options.input || args.opti
 
 
     if (!process.exitCode && args.options.insert) {
+        console.log(args.targets)
         fox.write(args.targets.join(" "));
     }
 
     if (!process.exitCode && args.options.input) {
-        process.stdin.on("data", (message) => fox.write(message));
+        process.stdin.setEncoding("utf8");
+        process.stdin.on("data", (message) => fox.write(message.trim()));
     }
 
     if (!process.exitCode && args.options.output) {
