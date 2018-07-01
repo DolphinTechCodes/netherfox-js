@@ -38,7 +38,7 @@ module.exports = {
 
     /* The connect method establishes a connection to the server and returns a Fox instance via callback 
        I know I should not put all the logic in here, but I want to get it work quickly */
-    connect: function (name) {
+    connect: function (name,cb) {
         let fox = new Socket();
 
         fox.port = null;
@@ -71,7 +71,7 @@ module.exports = {
             });
         }
 
-        fox.connect({ path: path.resolve(__dirname, SOCK_DIR, name) }, () => fox.connected = true);
+        fox.connect({ path: path.resolve(__dirname, SOCK_DIR, name) }, () => {fox.connected = true,cb()});
         return fox;
     }
 
