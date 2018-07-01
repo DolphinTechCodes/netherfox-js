@@ -159,8 +159,4 @@ if (!process.exitCode && (args.options.insert || args.options.input || args.opti
     if (!persistent) fox.end();
 
 });
-else try { fox.end();
-    
-} catch (error) {
-    
-}
+else process.exit();
