@@ -55,7 +55,7 @@ argv.option({
     example: "netherfox -cIO"
 });
 
-var persistent = args.options.input || args.options.input;
+
 
 
 var arguments = process.argv.slice(process.argv[0] == "netherfox" ? 1 : 2)
@@ -71,7 +71,7 @@ if (pos > -1) {
 
 
 const args = argv.run(arguments);
-
+var persistent = args.options.input || args.options.input;
 
 
 if (args.options.name) {
@@ -159,4 +159,8 @@ if (!process.exitCode && (args.options.insert || args.options.input || args.opti
     if (!persistent) fox.end();
 
 });
-else fox.end && fox.end();
+else try { fox.end();
+    
+} catch (error) {
+    
+}

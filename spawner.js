@@ -16,9 +16,9 @@ sock.on("connection", (conn) => {
     listeners.push(conn);
 
     conn.setEncoding("utf8")
-    conn.on("data", (d) =>child.stdin.write(d+"\n"));
-    conn.on("close", () => { conn=null; listeners = listeners.filter(x => x) });
-    conn.on("error", () => { conn=null; listeners = listeners.filter(x => x) });
+    conn.on("data", (d) => child.stdin.write(d + "\n"));
+    conn.on("close", () => { conn = null; listeners = listeners.filter(x => x) });
+    conn.on("error", () => { conn = null; listeners = listeners.filter(x => x) });
 
 });
 
@@ -31,5 +31,8 @@ var child = spawn(process.argv[3], process.argv.slice(4));
 
 child.stdout.on("data", (data) => { for (let e of listeners) e.write(data) });
 child.stderr.on("data", (data) => { for (let e of listeners) e.write(data) });
+child.on("close", sock.close);
+child.on("exit", sock.close);
 
 process.on("exit", () => { sock.close });
+process.on("SIGINT",()=>{sock.close(),process.exit()});
