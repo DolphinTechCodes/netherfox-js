@@ -55,7 +55,19 @@ argv.option({
     example: "netherfox -cIO"
 });
 
-const args = argv.run(process.argv.slice(process.argv[0] == "netherfox" ? 1 : 2));
+var arguments = process.argv.slice(process.argv[0] == "netherfox" ? 1 : 2)
+var startCmd = [];
+
+var pos = Math.max(arguments.indexOf("-s"), arguments.indexOf("-s"));
+
+if (pos > -1) {
+    startCmd = arguments.slice(pos + 1);
+    arguments = arguments.slice(0, pos + 1);
+}
+
+
+
+const args = argv.run(arguments);
 
 
 
@@ -77,7 +89,7 @@ else {
         process.exitCode = 1;
     }
     else {
-        
+
         var running_servers = fs.readdirSync(path.resolve(__dirname, netherfox.SOCK_DIR));
 
         if (running_servers.length === 0) {
@@ -108,13 +120,13 @@ if (!process.exitCode && args.options.start) {
     }
     else {
 
-        netherfox.start("name", args.target);
+        netherfox.start(name, startCmd);
     }
 }
 
 
 
-if (!process.exitCode) fox = netherfox.connect(name, () => {
+if (!process.exitCode && (args.options.insert || args.options.input || args.options.output)) fox = netherfox.connect(name, () => {
 
 
 
