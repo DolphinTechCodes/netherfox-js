@@ -22,7 +22,7 @@ sock.on("connection", (conn) => {
 
 });
 
-sock.on("error", sock.close);
+sock.on("error", () => { sock.close(), process.exit() });
 
 
 
@@ -31,8 +31,8 @@ var child = spawn(process.argv[3], process.argv.slice(4));
 
 child.stdout.on("data", (data) => { for (let e of listeners) e.write(data) });
 child.stderr.on("data", (data) => { for (let e of listeners) e.write(data) });
-child.on("close", sock.close);
-child.on("exit", sock.close);
+child.on("close", () => { sock.close(), process.exit() });
+child.on("exit", () => { sock.close(), process.exit() });
 
-process.on("exit", () => { sock.close });
-process.on("SIGINT",()=>{sock.close(),process.exit()});
+process.on("exit", () => { sock.close(), process.exit() });
+process.on("SIGINT", () => { sock.close(), process.exit() });

@@ -131,7 +131,7 @@ if (!process.exitCode && args.options.start) {
 
 if (!process.exitCode && (args.options.insert || args.options.input || args.options.output)) fox = netherfox.connect(name, () => {
 
-
+    process.stdin.setEncoding("utf8");
 
 
     if (!process.exitCode && args.options.insert) {
@@ -140,7 +140,7 @@ if (!process.exitCode && (args.options.insert || args.options.input || args.opti
     }
 
     if (!process.exitCode && args.options.input) {
-        process.stdin.setEncoding("utf8");
+       
         process.stdin.on("data", (message) => fox.write(message.trim()));
     }
 
