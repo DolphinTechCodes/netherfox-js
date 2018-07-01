@@ -132,7 +132,7 @@ if (!process.exitCode && (args.options.insert || args.options.input || args.opti
 
 
     if (!process.exitCode && args.options.insert) {
-        fox.write(args.target.join(" "));
+        fox.write(args.targets.join(" "));
     }
 
     if (!process.exitCode && args.options.input) {
