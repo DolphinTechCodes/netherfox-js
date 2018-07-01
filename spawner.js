@@ -16,7 +16,7 @@ sock.on("connection", (conn) => {
     listeners.push(conn);
 
     conn.setEncoding("utf8")
-    conn.on("data", child.stdin.write);
+    conn.on("data", (d) =>child.stdin.write(d+"\n"));
     conn.on("close", () => { conn=null; listeners = listeners.filter(x => x) });
     conn.on("error", () => { conn=null; listeners = listeners.filter(x => x) });
 
