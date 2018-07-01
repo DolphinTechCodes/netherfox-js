@@ -18,7 +18,7 @@ argv.option({
     name: 'input',
     short: 'I',
     type: 'boolean',
-    description: 'Take input from the terminal and forward it to the ninecraft server',
+    description: 'Take input from the terminal and forward it to the Minecraft server',
     example: ""
 });
 
@@ -103,7 +103,7 @@ else {
         }
 
         if (running_servers.length > 1) {
-            console.error("there are currently more than one servers running. Please specify a servern name");
+            console.error("there are currently more than one servers running. Please specify a server name");
             process.exitCode = 1;
 
         }
