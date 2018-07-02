@@ -10,10 +10,9 @@ module.exports = {
 
     /* Export the default directory for sockets */
     SOCK_DIR: SOCK_DIR,
-
     /* The start method spawns spawner.js in detached mode which then executes the bypassed command */
     start: function (name, cmd) {
-        console.log(path.resolve(SOCK_DIR,name))
+        
         cp.spawn("node", [path.resolve(__dirname + "/spawner.js"), path.resolve(__dirname, SOCK_DIR, name)].concat(cmd), { detached: true, stdio: "ignore" });
     },
 
