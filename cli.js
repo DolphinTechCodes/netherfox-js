@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const colors = require("colors");
 var argv = require("argv");
 const netherfox = require("./index.js");
 
@@ -140,15 +141,21 @@ if (!process.exitCode && (args.options.insert || args.options.input || args.opti
     }
 
     if (!process.exitCode && args.options.input) {
-       
+
         process.stdin.on("data", (message) => fox.write(message.trim()));
     }
 
     if (!process.exitCode && args.options.output) {
         if (args.options.colours) {
             fox.on("data", (message) => {
-                let parsed = netherfox.parseLog(message);
+               let parsed = netherfox.parseLog(message);
+                process.stdout.write(("[" + parsed.time.h + ":" + parsed.time.m + ":" + parsed.time.s + "] ").gray);
+                process.stdout.write("[".white + parsed.thread.yellow + "/".white + parsed.type.yellow + "] ".white);
 
+                if (parsed.message.startsWith("[STDERR]")) process.stdout.write(parsed.message.red);
+
+                else if (parsed.message[0] === "<") process.stdout.write(parsed.message.slice(0, parsed.message.indexOf(">")).blue + parsed.message.slice(parsed.message.indexOf(">")).cyan)
+                else process.stdout.write(parsed.message.white);
 
             });
         }
