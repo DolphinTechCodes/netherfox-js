@@ -19,6 +19,7 @@ module.exports = {
 
     /* The parse method analyzes a log entry */
     parseLog: function (log) {
+        log=log.toString("utf8");
         return {
 
             time: {
