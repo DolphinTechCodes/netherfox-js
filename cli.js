@@ -136,7 +136,7 @@ if (!process.exitCode && (args.options.insert || args.options.input || args.opti
 
 
     if (!process.exitCode && args.options.insert) {
-        console.log(args.targets)
+        
         fox.write(args.targets.join(" "));
     }
 
