@@ -12,7 +12,7 @@ argv.option({
     short: 'n',
     type: 'string',
     description: 'The name of the Minecraft server',
-    example: ""
+    example: "netherfox -n server"
 });
 
 argv.option({
@@ -20,7 +20,7 @@ argv.option({
     short: 'I',
     type: 'boolean',
     description: 'Take input from the terminal and forward it to the Minecraft server',
-    example: ""
+    example: "netherfox -I"
 });
 
 argv.option({
@@ -28,7 +28,7 @@ argv.option({
     short: 'O',
     type: 'boolean',
     description: 'Output the log from the Minecraft server',
-    example: ""
+    example: "netherfox -O"
 });
 
 
@@ -37,7 +37,7 @@ argv.option({
     short: 's',
     type: 'boolean',
     description: 'Start the Minecraft server with the following start command',
-    example: "netherfox -s java minecraft_server.jar"
+    example: "netherfox -n server -s java minecraft_server.jar"
 });
 
 argv.option({
@@ -79,26 +79,26 @@ if (args.options.name) {
     name = args.options.name;
 
     if (args.options.start && fs.existsSync(path.resolve(__dirname, netherfox.SOCK_DIR, name))) {
-        console.error("server " + name + " is already running");
-        process.exitCode = 1;
+        error("server " + name + " is already running",22);
+       
     }
     else if (!args.options.start && !fs.existsSync(path.resolve(__dirname, netherfox.SOCK_DIR, name))) {
-        console.error("server " + name + " does not exist");
-        process.exitCode = 1;
+        error("server " + name + " does not exist",22);
+        
     }
 }
 else {
     if (args.options.start) {
-        console.error("a server name must be specified");
-        process.exitCode = 1;
+        error("a server name must be specified",22);
+       
     }
     else {
 
         var running_servers = fs.readdirSync(path.resolve(__dirname, netherfox.SOCK_DIR));
 
         if (running_servers.length === 0) {
-            console.error("there is currently no server running");
-            process.exitCode = 1;
+            error("there is currently no server running",22);
+           
 
         }
 
@@ -107,9 +107,8 @@ else {
         }
 
         if (running_servers.length > 1) {
-            console.error("there are currently more than one servers running. Please specify a server name");
-            process.exitCode = 1;
-
+            error("there are currently more than one server running. Please specify a server name",22);
+            
         }
     }
 
@@ -117,10 +116,10 @@ else {
 
 
 
-if (!process.exitCode && args.options.start) {
+if (args.options.start) {
     if (args.options.insert) {
-        console.error("--start and --insert flags are not allowed at the same time")
-        process.exitCode = 1;
+        error("--start and --insert flags are not allowed at the same time",22)
+        
     }
     else {
 
@@ -130,22 +129,22 @@ if (!process.exitCode && args.options.start) {
 
 
 
-if (!process.exitCode && (args.options.insert || args.options.input || args.options.output)) fox = netherfox.connect(name, () => {
+if (args.options.insert || args.options.input || args.options.output) fox = netherfox.connect(name, () => {
 
     process.stdin.setEncoding("utf8");
 
 
-    if (!process.exitCode && args.options.insert) {
+    if (args.options.insert) {
         
         fox.write(args.targets.join(" "));
     }
 
-    if (!process.exitCode && args.options.input) {
+    if (args.options.input) {
 
         process.stdin.on("data", (message) => fox.write(message.trim()));
     }
 
-    if (!process.exitCode && args.options.output) {
+    if (args.options.output) {
         if (args.options.colours) {
             fox.on("data", (message) => {
                let parsed = netherfox.parseLog(message);
@@ -169,3 +168,9 @@ if (!process.exitCode && (args.options.insert || args.options.input || args.opti
 
 });
 else process.exit();
+
+function error(msg,code) {
+    process.stderr.write("netherfox: "+msg+"\n");
+    if(code==22) process.stderr.write("type 'netherfox -h' to get more information\n");
+    process.exit(code);
+}
