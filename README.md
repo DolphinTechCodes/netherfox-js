@@ -1,5 +1,11 @@
 # netherfox
 
+-----
+
+The JS version has been abandoned. See [the new version](https://github.com/DolphinTechCodes/netherfox) for the updated project
+
+-----
+
 Netherfox is a control and monitoring tool for minecraft servers written in JavaScript for Node.js. It provides a command line interface (CLI) for terminal  usage and an application programming interface (API) to integrate netherfox in e.g. a webinterface.
 
 Netherfox starts a minecraft server once and then lets it run in the background as a child prpcess, where then later multiple other instances of netherfox (either via CLI or API) can connect to the specific IPC server and exchange input and output. One so-called 'spawner' (the program which is the parent process of the actual minecraft server) can have multiple other instances listening.
@@ -8,7 +14,7 @@ Also, the spawner immediately exits after the child process exits.
 It is possible to have multiple servers running in parallel.
 
 ## Installation
-//TODO
+`npm install -g netherfox`
 ## API
 Netherfox can be required using `const netherfox = require("netherfox");`
 
